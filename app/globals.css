@@ -2,6 +2,27 @@
 @tailwind components;
 @tailwind utilities;
 
+@keyframes bounce-slow {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+.animate-bounce-slow {
+  animation: bounce-slow 3s infinite;
+}
+
+/* Add custom background patterns and other styles */
+.robot-pattern {
+  background-image: url("/images/robot-pattern.png");
+  background-repeat: repeat;
+  opacity: 0.1;
+}
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
