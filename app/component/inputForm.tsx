@@ -1,13 +1,11 @@
+import { ChatRequestOptions } from "ai";
 import { Loader2, Plus, Send } from "lucide-react";
-import React, {
+import {
   ChangeEvent,
-  Dispatch,
   FormEvent,
-  SetStateAction,
-  useState,
+  useState
 } from "react";
 import SelectedImages from "./selectedImages";
-import { ChatRequestOptions } from "ai";
 
 type Props = {
   handleInputChange: (
@@ -20,6 +18,8 @@ type Props = {
   input: string;
   isLoading: boolean;
   stop: () => void;
+  placeholder?: string;
+  sendButtonText?: string;
 };
 
 const InputForm = ({
@@ -28,6 +28,8 @@ const InputForm = ({
   input,
   isLoading,
   stop,
+  placeholder = "ask something . . . ",
+  sendButtonText
 }: Props) => {
   const [images, setImages] = useState<string[]>([]);
   const handleImageSelection = async (event: ChangeEvent<HTMLInputElement>) => {
@@ -82,10 +84,10 @@ const InputForm = ({
       }}
       className="w-full flex flex-row gap-2 items-center h-full mt-5"
     >
-      <div className="border flex flex-row relative">
+      <div className="border border-[#0842A0]/20 hover:border-[#0842A0]/50 rounded-lg flex flex-row relative transition-all">
         <Plus
           onClick={() => document.getElementById("fileInput")?.click()} // Click event handler
-          className="cursor-pointer p-3 h-10 w-10 stroke-stone-500"
+          className="cursor-pointer p-3 h-10 w-10 stroke-[#0842A0]"
         />
         <SelectedImages images={images} setImages={setImages} />
       </div>
@@ -99,11 +101,11 @@ const InputForm = ({
       />
       <input
         type="text"
-        placeholder={isLoading ? "Generating . . ." : "ask something . . . "}
+        placeholder={isLoading ? "Generating . . ." : placeholder}
         value={input}
         disabled={isLoading}
         onChange={handleInputChange}
-        className="border-b border-dashed outline-none w-full py-2 text-[#0842A0] placeholder:text-[#0842A099] text-right focus:placeholder-transparent disabled:bg-transparent"
+        className="border-b outline-none w-full py-2 px-4 text-[#0842A0] placeholder:text-[#0842A099] text-right focus:placeholder-transparent disabled:bg-transparent rounded-lg border border-[#0842A0]/20 focus:border-[#0842A0]/50 transition-all"
       />
       <button
         type="submit"

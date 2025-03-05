@@ -1,0 +1,49 @@
+{
+    "math": {
+        "title": "Math Game!",
+        "chooseOperation": "Choose an operation:",
+        "operations": {
+            "addition": "Addition",
+            "subtraction": "Subtraction",
+            "multiplication": "Multiplication",
+            "division": "Division"
+        },
+        "score": "Score: {score}",
+        "changeOperation": "← Change Operation",
+        "question": "What is {num1} {operator} {num2}?",
+        "correct": "🎉 Correct!",
+        "tryAgain": "❌ Try again!",
+        "nextQuestion": "Next Question",
+        "welcome": {
+            "title": "Welcome back, {name}!",
+            "progress": "You've completed {progress}% of your daily goals. Keep it up!"
+        }
+    },
+    "chat": {
+        "title": "AI Chat Assistant",
+        "placeholder": "Ask me anything...",
+        "send": "Send",
+        "generating": "Generating..."
+    },
+    "common": {
+        "welcome": "Hi!",
+        "whatToDo": "What would you like to do today?",
+        "back": "Back",
+        "math": {
+            "title": "Let's Play Math!",
+            "description": "Join me for some fun math adventures! 🎲"
+        },
+        "chat": {
+            "title": "Chat With Me!",
+            "description": "Ask me anything, I'm here to help! 💭"
+        }
+    },
+    "dailyChallenge": {
+        "title": "Daily Challenge",
+        "attempts": "Attempts: {count}",
+        "enterAnswer": "Enter your answer",
+        "submitAnswer": "Submit Answer",
+        "correct": "🎉 Correct!",
+        "tryAgain": "❌ Try again!"
+    }
+}

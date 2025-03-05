@@ -1,0 +1,49 @@
+{
+    "math": {
+        "title": "Jeu de Maths!",
+        "chooseOperation": "Choisissez une opération:",
+        "operations": {
+            "addition": "Addition",
+            "subtraction": "Soustraction",
+            "multiplication": "Multiplication",
+            "division": "Division"
+        },
+        "score": "Score: {score}",
+        "changeOperation": "← Changer d'opération",
+        "question": "Combien font {num1} {operator} {num2} ?",
+        "correct": "🎉 Correct!",
+        "tryAgain": "❌ Essayez encore!",
+        "nextQuestion": "Question suivante",
+        "welcome": {
+            "title": "Bon retour, {name}!",
+            "progress": "Vous avez complété {progress}% de vos objectifs quotidiens. Continuez ainsi!"
+        }
+    },
+    "chat": {
+        "title": "Assistant IA",
+        "placeholder": "Posez-moi une question...",
+        "send": "Envoyer",
+        "generating": "Génération en cours..."
+    },
+    "common": {
+        "welcome": "Salut !",
+        "whatToDo": "Que voudrais-tu faire aujourd'hui?",
+        "back": "Retour",
+        "math": {
+            "title": "Jouons aux Maths!",
+            "description": "Rejoins-moi pour des aventures mathématiques amusantes! 🎲"
+        },
+        "chat": {
+            "title": "Discute avec Moi!",
+            "description": "Pose-moi n'importe quelle question, je suis là pour t'aider! 💭"
+        }
+    },
+    "dailyChallenge": {
+        "title": "Défi du Jour",
+        "attempts": "Essais: {count}",
+        "enterAnswer": "Entrez votre réponse",
+        "submitAnswer": "Soumettre",
+        "correct": "🎉 Correct!",
+        "tryAgain": "❌ Essayez encore!"
+    }
+}
