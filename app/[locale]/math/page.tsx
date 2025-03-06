@@ -192,10 +192,10 @@ export default function MathGame() {
 
                             {showResult && (
                                 <button
-                                    onClick={generateQuestion}
+                                    onClick={isCorrect ? generateQuestion : () => setShowResult(false)}
                                     className="mt-4 px-6 py-3 bg-[#FF6B9D] text-white rounded-lg hover:bg-[#FF6B9D]/90"
                                 >
-                                    {t('nextQuestion')}
+                                    {isCorrect ? t('nextQuestion') : t('tryAgain')}
                                 </button>
                             )}
                         </div>

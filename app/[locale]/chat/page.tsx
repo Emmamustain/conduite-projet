@@ -11,7 +11,7 @@ export default function ChatPage() {
     const t = useTranslations('chat');
     const { messages, input, handleInputChange, handleSubmit, isLoading, stop } =
         useChat({
-            api: "api/genai",
+            api: "/api/genai",
         });
 
     const [responding, setResponding] = useState(false);
