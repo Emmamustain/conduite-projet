@@ -1,9 +1,10 @@
 "use client";
 import { useChat } from "ai/react";
-import Messages from "../component/messages";
-import InputForm from "../component/inputForm";
-import ChatResponseRobot from "../components/robots/ChatResponseRobot";
 import { useEffect, useState } from "react";
+import InputForm from "../component/inputForm";
+import Messages from "../component/messages";
+import PageLayout from "../components/PageLayout";
+import ChatResponseRobot from "../components/robots/ChatResponseRobot";
 
 export default function ChatPage() {
   const { messages, input, handleInputChange, handleSubmit, isLoading, stop } =
@@ -28,7 +29,7 @@ export default function ChatPage() {
   }, [messages]);
 
   return (
-    <main className="flex min-h-screen flex-col items-center p-12 text-lg">
+    <PageLayout>
       <ChatResponseRobot responding={responding} />
       <InputForm
         input={input}
@@ -38,6 +39,6 @@ export default function ChatPage() {
         stop={stop}
       />
       <Messages messages={messages} isLoading={isLoading} />
-    </main>
+    </PageLayout>
   );
 }

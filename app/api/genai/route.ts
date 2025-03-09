@@ -1,5 +1,5 @@
-import { StreamingTextResponse, GoogleGenerativeAIStream, Message } from "ai";
-import { GoogleGenerativeAI, Content } from "@google/generative-ai";
+import { GoogleGenerativeAI } from "@google/generative-ai";
+import { Message } from "ai";
 // IMPORTANT! Set the runtime to edge
 export const runtime = "edge";
 export async function POST(req: Request, res: Response) {
@@ -31,8 +31,26 @@ export async function POST(req: Request, res: Response) {
   console.log("MODELNAME: " + modelName);
   console.log("PROMPT WITH PARTS: ");
   console.log(promptWithParts);
-  const streamingResponse = await model.generateContentStream(promptWithParts);
-  return new StreamingTextResponse(GoogleGenerativeAIStream(streamingResponse));
+
+  const result = await model.generateContentStream(promptWithParts);
+  const stream = new ReadableStream({
+    async start(controller) {
+      for await (const chunk of result.stream) {
+        const text = chunk.text();
+        if (text) {
+          controller.enqueue(new TextEncoder().encode(text));
+        }
+      }
+      controller.close();
+    },
+  });
+
+  return new Response(stream, {
+    headers: {
+      'Content-Type': 'text/plain; charset=utf-8',
+      'Transfer-Encoding': 'chunked',
+    },
+  });
 }
 
 function buildGoogleGenAIPrompt(messages: Message[]) {
