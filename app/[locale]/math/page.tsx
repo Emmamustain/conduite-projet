@@ -182,11 +182,9 @@ export default function MathGame() {
                                 </>
                             )}
 
-                            {showResult && (
-                                <div
-                                    className={`text-xl font-bold ${isCorrect ? "text-green-500" : "text-red-500"}`}
-                                >
-                                    {isCorrect ? t('correct') : t('tryAgain')}
+                            {showResult && isCorrect && (
+                                <div className="text-xl font-bold text-green-500">
+                                    {t('correct')}
                                 </div>
                             )}
 

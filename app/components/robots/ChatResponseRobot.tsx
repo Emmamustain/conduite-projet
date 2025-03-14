@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 
 export default function ChatResponseRobot({
   responding,
@@ -12,9 +11,8 @@ export default function ChatResponseRobot({
       viewBox="0 0 100 100"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className={`transition-transform duration-500 ${
-        responding ? "animate-bounce" : ""
-      }`}
+      className={`transition-transform duration-500 ${responding ? "animate-bounce" : ""
+        }`}
     >
       {/* Head */}
       <circle cx="50" cy="45" r="30" fill="#87CEEB" />
