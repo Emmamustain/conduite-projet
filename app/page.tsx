@@ -1,8 +1,8 @@
-import Link from "next/link";
 import { Brain, Calculator } from "lucide-react";
-import WavingRobot from "./components/robots/WavingRobot";
-import MathRobot from "./components/robots/MathRobot";
+import Link from "next/link";
 import ChatRobot from "./components/robots/ChatRobot";
+import MathRobot from "./components/robots/MathRobot";
+import WavingRobot from "./components/robots/WavingRobot";
 
 export default function Home() {
   return (
