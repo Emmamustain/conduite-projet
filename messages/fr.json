@@ -12,8 +12,14 @@
         "changeOperation": "← Changer d'opération",
         "question": "Combien font {num1} {operator} {num2} ?",
         "correct": "🎉 Correct!",
+        "incorrect": "❌ Incorrect!",
         "tryAgain": "❌ Essayez encore!",
         "nextQuestion": "Question suivante",
+        "robotMessages": {
+            "thinking": "Hmm, quelle est la réponse?",
+            "correct": "Bravo! Tu es très intelligent!",
+            "incorrect": "Oups! Essayons encore!"
+        },
         "welcome": {
             "title": "Bon retour, {name}!",
             "progress": "Vous avez complété {progress}% de vos objectifs quotidiens. Continuez ainsi!"

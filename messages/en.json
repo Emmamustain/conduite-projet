@@ -12,8 +12,14 @@
         "changeOperation": "← Change Operation",
         "question": "What is {num1} {operator} {num2}?",
         "correct": "🎉 Correct!",
+        "incorrect": "❌ Incorrect!",
         "tryAgain": "❌ Try again!",
         "nextQuestion": "Next Question",
+        "robotMessages": {
+            "thinking": "Hmm, what's the answer?",
+            "correct": "Great job! You're so smart!",
+            "incorrect": "Oops! Let's try again!"
+        },
         "welcome": {
             "title": "Welcome back, {name}!",
             "progress": "You've completed {progress}% of your daily goals. Keep it up!"

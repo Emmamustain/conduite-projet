@@ -4,6 +4,7 @@ import { useTranslations } from 'next-intl';
 import { useEffect, useState } from "react";
 import DailyChallenge from "../../components/DailyChallenge";
 import PageLayout from "../../components/PageLayout";
+import EmotionalRobot from "../../components/robots/EmotionalRobot";
 import WelcomeProgress from "../../components/WelcomeProgress";
 
 interface Question {
@@ -12,7 +13,7 @@ interface Question {
     options: number[];
 }
 
-type Operation = 'add' | 'subtract' | 'multiply' | 'divide';
+type Operation = 'add' | 'subtract' | 'multiply';
 
 export default function MathGame() {
     const t = useTranslations('math');
@@ -23,16 +24,20 @@ export default function MathGame() {
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [selectedOperation, setSelectedOperation] = useState<Operation | null>(null);
     const [dailyChallengeCompleted, setDailyChallengeCompleted] = useState(false);
+    const [robotEmotion, setRobotEmotion] = useState<'neutral' | 'happy' | 'sad' | 'angry' | 'afraid' | 'surprise'>('neutral');
 
     const generateQuestion = () => {
         setIsLoading(true);
         setShowResult(false);
+        setRobotEmotion('neutral');
 
         const num1 = Math.floor(Math.random() * 10) + 1;
         const num2 = Math.floor(Math.random() * 10) + 1;
 
         let answer: number;
         let operator: string;
+        let questionNum1 = num1;
+        let questionNum2 = num2;
 
         switch (selectedOperation) {
             case 'add':
@@ -44,12 +49,10 @@ export default function MathGame() {
                 operator = '-';
                 break;
             case 'multiply':
-                answer = num1 * num2;
+                questionNum1 = Math.floor(Math.random() * 3) + 1;
+                questionNum2 = Math.floor(Math.random() * 3) + 1;
+                answer = questionNum1 * questionNum2;
                 operator = '×';
-                break;
-            case 'divide':
-                answer = num1;
-                operator = '÷';
                 break;
             default:
                 answer = 0;
@@ -57,8 +60,8 @@ export default function MathGame() {
         }
 
         const questionText = t('question', {
-            num1: selectedOperation === 'divide' ? (num1 * num2) : num1,
-            num2,
+            num1: selectedOperation === 'multiply' ? questionNum1 : num1,
+            num2: selectedOperation === 'multiply' ? questionNum2 : num2,
             operator
         });
 
@@ -90,7 +93,10 @@ export default function MathGame() {
         setShowResult(true);
 
         if (correct) {
+            setRobotEmotion('happy');
             setScore(score + 1);
+        } else {
+            setRobotEmotion('sad');
         }
     };
 
@@ -105,6 +111,17 @@ export default function MathGame() {
         }
     }, [selectedOperation]);
 
+    // Get robot message based on emotion
+    const getRobotMessage = () => {
+        if (!showResult) return t('robotMessages.thinking');
+
+        if (isCorrect) {
+            return t('robotMessages.correct');
+        } else {
+            return t('robotMessages.incorrect');
+        }
+    };
+
     return (
         <PageLayout>
             <WelcomeProgress progress={65} />
@@ -114,34 +131,27 @@ export default function MathGame() {
             {!selectedOperation ? (
                 <div className="flex flex-col items-center gap-6 w-full max-w-6xl">
                     <div className="text-2xl font-semibold mb-6 text-[#1a1a1a]">{t('chooseOperation')}</div>
-                    <div className="w-full grid grid-cols-2 gap-8 mb-8">
+                    <div className="w-full flex flex-col gap-4 mb-8">
                         <button
                             onClick={() => selectOperation('add')}
-                            className="h-40 rounded-xl bg-[#4ADE80] text-white p-6 flex flex-col items-center justify-center hover:opacity-90 transition-opacity"
+                            className="w-full h-20 rounded-xl bg-[#4ADE80] text-white p-6 flex items-center justify-center hover:opacity-90 transition-opacity"
                         >
-                            <span className="text-4xl block mb-2">+</span>
+                            <span className="text-4xl mr-4">+</span>
                             <span className="text-2xl font-semibold">{t('operations.addition')}</span>
                         </button>
                         <button
                             onClick={() => selectOperation('subtract')}
-                            className="h-40 rounded-xl bg-[#EAB308] text-white p-6 flex flex-col items-center justify-center hover:opacity-90 transition-opacity"
+                            className="w-full h-20 rounded-xl bg-[#EAB308] text-white p-6 flex items-center justify-center hover:opacity-90 transition-opacity"
                         >
-                            <span className="text-4xl block mb-2">−</span>
+                            <span className="text-4xl mr-4">−</span>
                             <span className="text-2xl font-semibold">{t('operations.subtraction')}</span>
                         </button>
                         <button
                             onClick={() => selectOperation('multiply')}
-                            className="h-40 rounded-xl bg-[#EF4444] text-white p-6 flex flex-col items-center justify-center hover:opacity-90 transition-opacity"
+                            className="w-full h-20 rounded-xl bg-[#EF4444] text-white p-6 flex items-center justify-center hover:opacity-90 transition-opacity"
                         >
-                            <span className="text-4xl block mb-2">×</span>
+                            <span className="text-4xl mr-4">×</span>
                             <span className="text-2xl font-semibold">{t('operations.multiplication')}</span>
-                        </button>
-                        <button
-                            onClick={() => selectOperation('divide')}
-                            className="h-40 rounded-xl bg-[#3B82F6] text-white p-6 flex flex-col items-center justify-center hover:opacity-90 transition-opacity"
-                        >
-                            <span className="text-4xl block mb-2">÷</span>
-                            <span className="text-2xl font-semibold">{t('operations.division')}</span>
                         </button>
                     </div>
                     <div className="mt-8">
@@ -162,6 +172,20 @@ export default function MathGame() {
                         <Loader2 className="h-8 w-8 animate-spin text-[#FF6B9D]" />
                     ) : (
                         <div className="flex flex-col items-center gap-6">
+                            {/* Robot with emotion and speech bubble */}
+                            <div className="relative mb-8">
+                                <div className="mb-4 transition-all duration-300">
+                                    <EmotionalRobot emotion={robotEmotion} size={180} />
+                                </div>
+
+                                {/* Speech bubble */}
+                                <div className="absolute -right-28 top-16 bg-white p-4 rounded-xl shadow-md max-w-[200px] border-2 border-[#FFB6C1] before:content-[''] before:absolute before:left-[-10px] before:top-[20px] before:border-t-[10px] before:border-r-[10px] before:border-b-[10px] before:border-t-transparent before:border-r-white before:border-b-transparent">
+                                    <p className="text-[#1a1a1a] text-sm font-medium">
+                                        {getRobotMessage()}
+                                    </p>
+                                </div>
+                            </div>
+
                             {question && (
                                 <>
                                     <div className="text-2xl font-semibold mb-4 text-[#FF6B9D]">
@@ -185,6 +209,12 @@ export default function MathGame() {
                             {showResult && isCorrect && (
                                 <div className="text-xl font-bold text-green-500">
                                     {t('correct')}
+                                </div>
+                            )}
+
+                            {showResult && !isCorrect && (
+                                <div className="text-xl font-bold text-red-500">
+                                    {t('incorrect')}
                                 </div>
                             )}
 
