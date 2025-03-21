@@ -1,18 +1,13 @@
 import { ChatRequestOptions } from "ai";
 import { Loader2, Mic, MicOff, Plus, Send } from "lucide-react";
-import {
-  ChangeEvent,
-  FormEvent,
-  useEffect,
-  useState
-} from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import SelectedImages from "./selectedImages";
 
 // Add type definitions for the Web Speech API
 interface SpeechRecognitionEvent extends Event {
   results: SpeechRecognitionResultList;
   resultIndex: number;
-  error: any;
+  error: string;
 }
 
 interface SpeechRecognitionResultList {
@@ -60,7 +55,6 @@ type Props = {
   isLoading: boolean;
   stop: () => void;
   placeholder?: string;
-  sendButtonText?: string;
 };
 
 const InputForm = ({
@@ -70,27 +64,36 @@ const InputForm = ({
   isLoading,
   stop,
   placeholder = "ask something . . . ",
-  sendButtonText
 }: Props) => {
   const [images, setImages] = useState<string[]>([]);
   const [isListening, setIsListening] = useState(false);
-  const [recognition, setRecognition] = useState<SpeechRecognition | null>(null);
+  const [recognition, setRecognition] = useState<SpeechRecognition | null>(
+    null
+  );
 
   useEffect(() => {
     // Initialize speech recognition when component mounts
-    if (typeof window !== 'undefined' && ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window)) {
-      const SpeechRecognitionAPI = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+    if (
+      typeof window !== "undefined" &&
+      ("SpeechRecognition" in window || "webkitSpeechRecognition" in window)
+    ) {
+      const SpeechRecognitionAPI =
+        (window as Window).SpeechRecognition ||
+        (window as Window).webkitSpeechRecognition;
+      if (!SpeechRecognitionAPI) {
+        return;
+      }
       const recognitionInstance = new SpeechRecognitionAPI();
 
       recognitionInstance.continuous = false;
       recognitionInstance.interimResults = false;
-      recognitionInstance.lang = 'fr-FR';
+      recognitionInstance.lang = "fr-FR";
 
       recognitionInstance.onresult = (event: SpeechRecognitionEvent) => {
         const transcript = event.results[0][0].transcript;
         // Create a synthetic event to update the input
         const syntheticEvent = {
-          target: { value: input + transcript }
+          target: { value: input + transcript },
         } as ChangeEvent<HTMLInputElement>;
 
         handleInputChange(syntheticEvent);
@@ -98,7 +101,7 @@ const InputForm = ({
       };
 
       recognitionInstance.onerror = (event: SpeechRecognitionEvent) => {
-        console.error('Speech recognition error', event.error);
+        console.error("Speech recognition error", event.error);
         setIsListening(false);
       };
 
@@ -118,7 +121,7 @@ const InputForm = ({
 
   const toggleListening = () => {
     if (!recognition) {
-      alert('Speech recognition is not supported in your browser.');
+      alert("Speech recognition is not supported in your browser.");
       return;
     }
 
@@ -201,7 +204,13 @@ const InputForm = ({
       <div className="relative flex-grow">
         <input
           type="text"
-          placeholder={isLoading ? "Generating . . ." : isListening ? "Listening..." : placeholder}
+          placeholder={
+            isLoading
+              ? "Generating . . ."
+              : isListening
+              ? "Listening..."
+              : placeholder
+          }
           value={input}
           disabled={isLoading || isListening}
           onChange={handleInputChange}
