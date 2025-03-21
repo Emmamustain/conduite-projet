@@ -2,26 +2,13 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 import { Message } from "ai";
 // IMPORTANT! Set the runtime to edge
 export const runtime = "edge";
-export async function POST(req: Request, res: Response) {
+export async function POST(req: Request) {
   const reqBody = await req.json();
-  const images: string[] = JSON.parse(reqBody.data.images);
-  const imageParts = filesArrayToGenerativeParts(images);
   const messages: Message[] = reqBody.messages;
-  // if imageparts exist then take the last user message as prompt
-  let modelName: string;
-  let promptWithParts: any;
-  if (imageParts.length > 0) {
-    modelName = "gemini-pro-vision";
-    const prompt = [...messages]
-      .filter((message) => message.role === "user")
-      .pop()?.content;
-    console.log(prompt);
-    promptWithParts = [prompt, ...imageParts];
-  } else {
-    // else build the multi-turn chat prompt
-    modelName = "gemini-2.0-flash";
-    promptWithParts = buildGoogleGenAIPrompt(messages);
-  }
+
+  // Build the multi-turn chat prompt
+  const modelName = "gemini-2.0-flash";
+  const promptWithParts = buildGoogleGenAIPrompt(messages);
 
   const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY!);
   const model = genAI.getGenerativeModel({
@@ -47,8 +34,8 @@ export async function POST(req: Request, res: Response) {
 
   return new Response(stream, {
     headers: {
-      'Content-Type': 'text/plain; charset=utf-8',
-      'Transfer-Encoding': 'chunked',
+      "Content-Type": "text/plain; charset=utf-8",
+      "Transfer-Encoding": "chunked",
     },
   });
 }
@@ -64,16 +51,4 @@ function buildGoogleGenAIPrompt(messages: Message[]) {
         parts: [{ text: message.content }],
       })),
   };
-}
-
-function filesArrayToGenerativeParts(images: string[]) {
-  return images.map((imageData) => ({
-    inlineData: {
-      data: imageData.split(",")[1],
-      mimeType: imageData.substring(
-        imageData.indexOf(":") + 1,
-        imageData.lastIndexOf(";")
-      ),
-    },
-  }));
 }

@@ -27,7 +27,7 @@ export default function Home() {
           </div>
           <Calculator className="w-16 h-16 text-[#FF6B9D] mb-4 mt-8" />
           <h2 className="text-2xl font-bold text-[#FF6B9D] mb-2">
-            Let's Play Math!
+            Let&apos;s Play Math!
           </h2>
           <p className="text-gray-600 text-center">
             Join me for some fun math adventures! 🎲
@@ -46,7 +46,7 @@ export default function Home() {
             Chat With Me!
           </h2>
           <p className="text-gray-600 text-center">
-            Ask me anything, I'm here to help! 💭
+            Ask me anything, I&apos;m here to help! 💭
           </p>
         </Link>
       </div>
