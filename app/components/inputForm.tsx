@@ -208,8 +208,8 @@ const InputForm = ({
             isLoading
               ? "Generating . . ."
               : isListening
-              ? "Listening..."
-              : placeholder
+                ? "Listening..."
+                : placeholder
           }
           value={input}
           disabled={isLoading || isListening}

@@ -2,8 +2,8 @@
 import { useChat } from "ai/react";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
-import InputForm from "../../component/inputForm";
-import Messages from "../../component/messages";
+import InputForm from "../../components/inputForm";
+import Messages from "../../components/messages";
 import PageLayout from "../../components/PageLayout";
 import ChatResponseRobot from "../../components/robots/ChatResponseRobot";
 
