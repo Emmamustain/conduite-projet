@@ -4,7 +4,7 @@ import { useLocale, useTranslations } from 'next-intl';
 import Link from "next/link";
 import PageLayout from '../../components/PageLayout';
 import ChatRobot from "../../components/robots/ChatRobot";
-import EmotionalRobot from "../../components/robots/EmotionalRobot";
+import MathRobot from "../../components/robots/MathRobot";
 import WavingRobot from "../../components/robots/WavingRobot";
 
 export default function ClientHome() {
@@ -29,7 +29,7 @@ export default function ClientHome() {
                     className="group relative flex flex-col items-center p-8 bg-white rounded-3xl shadow-lg hover:shadow-xl transition-all duration-300 border-4 border-[#FFB6C1] hover:border-[#FF6B9D] hover:-translate-y-2"
                 >
                     <div className="absolute -top-20 transition-transform group-hover:scale-110">
-                        <EmotionalRobot emotion="happy" size={150} />
+                        <MathRobot />
                     </div>
                     <Calculator className="w-16 h-16 text-[#FF6B9D] mb-4 mt-12" />
                     <h2 className="text-2xl font-bold text-[#FF6B9D] mb-2">
