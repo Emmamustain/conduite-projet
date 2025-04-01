@@ -1,16 +1,26 @@
 import Lottie from "lottie-react";
 import { useEffect, useState } from "react";
-import placeholderAnimation from "./animations/sad.json";
+import happyAnimation from "./animations/happy.json";
+import hmmAnimation from "./animations/hmm.json";
+import sadAnimation from "./animations/sad.json";
+import wowAnimation from "./animations/wow.json";
 
-type Emotion = "neutral" | "happy" | "sad" | "angry" | "afraid" | "surprise";
+type Emotion = "neutral" | "happy" | "sad" | "surprise";
 
 interface EmotionalRobotProps {
   emotion: Emotion;
   size?: number;
 }
 
+const emotionAnimations = {
+  happy: happyAnimation,
+  sad: sadAnimation,
+  neutral: hmmAnimation,
+  surprise: wowAnimation,
+};
+
 export default function EmotionalRobot({
-  emotion = "neutral",
+  emotion = "happy",
   size = 150,
 }: EmotionalRobotProps) {
   const [animate, setAnimate] = useState(false);
@@ -28,7 +38,7 @@ export default function EmotionalRobot({
   return (
     <div className={`${animationClass} transition-all duration-300`}>
       <Lottie
-        animationData={placeholderAnimation}
+        animationData={emotionAnimations[emotion]}
         loop={true}
         style={{ width: size, height: size }}
       />

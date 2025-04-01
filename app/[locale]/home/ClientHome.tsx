@@ -4,8 +4,8 @@ import { useLocale, useTranslations } from 'next-intl';
 import Link from "next/link";
 import PageLayout from '../../components/PageLayout';
 import ChatRobot from "../../components/robots/ChatRobot";
+import EmotionalRobot from "../../components/robots/EmotionalRobot";
 import MathRobot from "../../components/robots/MathRobot";
-import WavingRobot from "../../components/robots/WavingRobot";
 
 export default function ClientHome() {
     const t = useTranslations('common');
@@ -15,7 +15,7 @@ export default function ClientHome() {
         <PageLayout showBackButton={false}>
             <div className="flex flex-col items-center mb-12">
                 <div className="w-[200px] h-[200px] mb-6">
-                    <WavingRobot />
+                    <EmotionalRobot emotion="happy" size={200} />
                 </div>
                 <h1 className="text-5xl font-bold text-[#FF6B9D] mb-4">{t('welcome')}</h1>
                 <p className="text-2xl text-[#4B5563]">
