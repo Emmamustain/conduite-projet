@@ -32,8 +32,12 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
     }
 
     return (
-        <NextIntlClientProvider locale={locale} messages={messages}>
-            {children}
-        </NextIntlClientProvider>
+        <html lang={locale} className={`${geistSans.variable} ${geistMono.variable}`}>
+            <body>
+                <NextIntlClientProvider locale={locale} messages={messages}>
+                    {children}
+                </NextIntlClientProvider>
+            </body>
+        </html>
     );
-} 
+}
