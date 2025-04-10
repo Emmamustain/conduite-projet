@@ -8,7 +8,7 @@ interface PageLayoutProps {
 
 export default function PageLayout({ children, showBackButton = true }: PageLayoutProps) {
     return (
-        <main className="flex min-h-screen flex-col items-center p-12 bg-gradient-to-b from-[#FFE5F0] to-[#E5F0FF] relative">
+        <main className="flex min-h-screen flex-col items-center p-12 relative bg-cover bg-center bg-no-repeat" style={{ backgroundImage: 'url("/images/background.jpg")' }}>
             <ClientLayout showBackButton={showBackButton}>
                 {children}
             </ClientLayout>

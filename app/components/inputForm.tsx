@@ -67,11 +67,11 @@ const InputForm = ({
 }: Props) => {
   const [images, setImages] = useState<string[]>([]);
   const [isListening, setIsListening] = useState(false);
-  const [recognition, setRecognition] = useState<SpeechRecognition | null>(
-    null
-  );
+  const [recognition, setRecognition] = useState<SpeechRecognition | null>(null);
 
   useEffect(() => {
+    let recognitionInstance: SpeechRecognition | null = null;
+
     // Initialize speech recognition when component mounts
     if (
       typeof window !== "undefined" &&
@@ -83,7 +83,7 @@ const InputForm = ({
       if (!SpeechRecognitionAPI) {
         return;
       }
-      const recognitionInstance = new SpeechRecognitionAPI();
+      recognitionInstance = new SpeechRecognitionAPI();
 
       recognitionInstance.continuous = false;
       recognitionInstance.interimResults = false;
@@ -113,8 +113,8 @@ const InputForm = ({
     }
 
     return () => {
-      if (recognition) {
-        recognition.abort();
+      if (recognitionInstance) {
+        recognitionInstance.abort();
       }
     };
   }, [input, handleInputChange]);
@@ -145,13 +145,10 @@ const InputForm = ({
 
       imagePromises.push(
         new Promise<string>((resolve, reject) => {
-          // set onload on reader
           reader.onload = (e) => {
             const base64String = e.target?.result?.toString();
-            // const base64String = e.target?.result?.toString().split(",")[1];
             resolve(base64String as string);
           };
-          // set onerror on reader
           reader.onerror = (error) => reject(error);
           reader.readAsDataURL(file);
         })
@@ -159,21 +156,19 @@ const InputForm = ({
     }
 
     try {
-      const base64Strings = await Promise.all(imagePromises); // Wait for all conversions
-      // setImages(base64Strings as string[]);
+      const base64Strings = await Promise.all(imagePromises);
       setImages((prevImages: string[]) => {
-        // Explicitly type the result as a string array
         const updatedImages: string[] = [
           ...prevImages,
           ...(base64Strings as string[]),
         ];
-        // const updatedImages: string[] = base64Strings as string[];
         return updatedImages;
       });
     } catch (error) {
       console.error("Error reading image:", error);
     }
   };
+
   return (
     <form
       onSubmit={(event) => {
@@ -188,7 +183,7 @@ const InputForm = ({
     >
       <div className="border border-[#0842A0]/20 hover:border-[#0842A0]/50 rounded-lg flex flex-row relative transition-all">
         <Plus
-          onClick={() => document.getElementById("fileInput")?.click()} // Click event handler
+          onClick={() => document.getElementById("fileInput")?.click()}
           className="cursor-pointer p-3 h-10 w-10 stroke-[#0842A0]"
         />
         <SelectedImages images={images} setImages={setImages} />

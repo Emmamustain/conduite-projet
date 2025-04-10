@@ -2,10 +2,8 @@
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
-import DailyChallenge from "../../components/DailyChallenge";
 import PageLayout from "../../components/PageLayout";
 import EmotionalRobot from "../../components/robots/EmotionalRobot";
-import WelcomeProgress from "../../components/WelcomeProgress";
 
 interface Question {
   question: string;
@@ -25,16 +23,14 @@ export default function MathGame() {
   const [selectedOperation, setSelectedOperation] = useState<Operation | null>(
     null
   );
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [_, setDailyChallengeCompleted] = useState(false);
   const [robotEmotion, setRobotEmotion] = useState<
-    "neutral" | "happy" | "sad" | "angry" | "afraid" | "surprise"
-  >("neutral");
+    "neutral" | "happy" | "sad" | "surprise"
+  >("happy");
 
   const generateQuestion = () => {
     setIsLoading(true);
     setShowResult(false);
-    setRobotEmotion("neutral");
+    setRobotEmotion("happy");
 
     const num1 = Math.floor(Math.random() * 10) + 1;
     const num2 = Math.floor(Math.random() * 10) + 1;
@@ -98,7 +94,7 @@ export default function MathGame() {
     setShowResult(true);
 
     if (correct) {
-      setRobotEmotion("happy");
+      setRobotEmotion("surprise");
       setScore(score + 1);
     } else {
       setRobotEmotion("sad");
@@ -129,8 +125,6 @@ export default function MathGame() {
 
   return (
     <PageLayout>
-      <WelcomeProgress progress={65} />
-
       <h1 className="text-4xl font-bold mb-8 text-[#1a1a1a]">{t("title")}</h1>
 
       {!selectedOperation ? (
@@ -167,11 +161,6 @@ export default function MathGame() {
               </span>
             </button>
           </div>
-          <div className="mt-8">
-            <DailyChallenge
-              onAnswerSubmit={(correct) => setDailyChallengeCompleted(correct)}
-            />
-          </div>
         </div>
       ) : (
         <>
@@ -196,7 +185,7 @@ export default function MathGame() {
                 </div>
 
                 {/* Speech bubble */}
-                <div className="absolute -right-28 top-16 bg-white p-4 rounded-xl shadow-md max-w-[200px] border-2 border-[#FFB6C1] before:content-[''] before:absolute before:left-[-10px] before:top-[20px] before:border-t-[10px] before:border-r-[10px] before:border-b-[10px] before:border-t-transparent before:border-r-white before:border-b-transparent">
+                <div className="absolute right-[-200px] top-16 bg-white p-4 rounded-xl shadow-md max-w-[200px] border-2 border-[#FFB6C1] before:content-[''] before:absolute before:left-[-10px] before:top-[20px] before:border-t-[10px] before:border-r-[10px] before:border-b-[10px] before:border-t-transparent before:border-r-white before:border-b-transparent">
                   <p className="text-[#1a1a1a] text-sm font-medium">
                     {getRobotMessage()}
                   </p>
