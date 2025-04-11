@@ -6,14 +6,20 @@
             "addition": "Addition",
             "subtraction": "Subtraction",
             "multiplication": "Multiplication",
-            "division": "Division"
+            "division": "Division",
+            "comparison": "Number Comparison"
         },
         "score": "Score: {score}",
         "changeOperation": "← Change Operation",
         "question": "What is {num1} {operator} {num2}?",
-        "correct": "🎉 Correct!",
-        "incorrect": "❌ Incorrect!",
-        "tryAgain": "❌ Try again!",
+        "comparison": {
+            "question": "Which symbol goes in the box?",
+            "correct": " Correct! {num1} {symbol} {num2}",
+            "incorrect": " Try again! Think which number is bigger"
+        },
+        "correct": " Correct!",
+        "incorrect": " Incorrect!",
+        "tryAgain": " Try again!",
         "nextQuestion": "Next Question",
         "robotMessages": {
             "thinking": "Hmm, what's the answer?",
@@ -37,11 +43,11 @@
         "back": "Back",
         "math": {
             "title": "Let's Play Math!",
-            "description": "Join me for some fun math adventures! 🎲"
+            "description": "Join me for some fun math adventures! "
         },
         "chat": {
             "title": "Chat With Me!",
-            "description": "Ask me anything, I'm here to help! 💭"
+            "description": "Ask me anything, I'm here to help! "
         }
     },
     "dailyChallenge": {
@@ -49,7 +55,7 @@
         "attempts": "Attempts: {count}",
         "enterAnswer": "Enter your answer",
         "submitAnswer": "Submit Answer",
-        "correct": "🎉 Correct!",
-        "tryAgain": "❌ Try again!"
+        "correct": " Correct!",
+        "tryAgain": " Try again!"
     }
 }

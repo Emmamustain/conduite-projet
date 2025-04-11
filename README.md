@@ -2,7 +2,16 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ## Getting Started
 
-First, run the development server:
+First, set up your environment variables:
+
+Create a `.env.local` file in the root directory with the following variables:
+```
+GOOGLE_API_KEY=your_google_api_key_here
+```
+
+- The `GOOGLE_API_KEY` is used for the Gemini AI chat functionality
+
+Then, run the development server:
 
 ```bash
 npm run dev
@@ -19,6 +28,17 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+
+## Features
+
+### Math Games
+- Addition, subtraction, multiplication, and number comparison games
+- Kid-friendly interface with animated robot
+- Score tracking and feedback
+
+### AI Chat Assistant
+- Text-based chat with AI assistant
+- Multilingual support (English and French)
 
 ## Learn More
 

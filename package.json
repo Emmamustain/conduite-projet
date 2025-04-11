@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@google/generative-ai": "^0.22.0",
+    "@lottiefiles/react-lottie-player": "^3.6.0",
     "ai": "^3.0.2",
     "dompurify": "^3.2.4",
     "lottie-react": "^2.4.1",
