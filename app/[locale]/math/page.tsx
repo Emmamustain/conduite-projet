@@ -7,11 +7,14 @@ import EmotionalRobot from "../../components/robots/EmotionalRobot";
 
 interface Question {
   question: string;
-  answer: number;
-  options: number[];
+  answer: string;
+  num1?: number;
+  num2?: number;
+  options?: number[];
+  isComparison?: boolean;
 }
 
-type Operation = "add" | "subtract" | "multiply";
+type Operation = "add" | "subtract" | "multiply" | "compare";
 
 export default function MathGame() {
   const t = useTranslations("math");
@@ -32,8 +35,21 @@ export default function MathGame() {
     setShowResult(false);
     setRobotEmotion("happy");
 
-    const num1 = Math.floor(Math.random() * 10) + 1;
-    const num2 = Math.floor(Math.random() * 10) + 1;
+    const num1 = Math.floor(Math.random() * 100);
+    const num2 = Math.floor(Math.random() * 100);
+
+    if (selectedOperation === "compare") {
+      const answer = num1 > num2 ? ">" : "<";
+      setQuestion({
+        question: t("comparison.question"),
+        answer,
+        num1,
+        num2,
+        isComparison: true
+      });
+      setIsLoading(false);
+      return;
+    }
 
     let answer: number;
     let operator: string;
@@ -42,11 +58,15 @@ export default function MathGame() {
 
     switch (selectedOperation) {
       case "add":
-        answer = num1 + num2;
+        questionNum1 = Math.floor(Math.random() * 10) + 1;
+        questionNum2 = Math.floor(Math.random() * 10) + 1;
+        answer = questionNum1 + questionNum2;
         operator = "+";
         break;
       case "subtract":
-        answer = num1 - num2;
+        questionNum1 = Math.floor(Math.random() * 10) + 1;
+        questionNum2 = Math.floor(Math.random() * 10) + 1;
+        answer = questionNum1 - questionNum2;
         operator = "-";
         break;
       case "multiply":
@@ -61,8 +81,8 @@ export default function MathGame() {
     }
 
     const questionText = t("question", {
-      num1: selectedOperation === "multiply" ? questionNum1 : num1,
-      num2: selectedOperation === "multiply" ? questionNum2 : num2,
+      num1: questionNum1,
+      num2: questionNum2,
       operator,
     });
 
@@ -79,17 +99,17 @@ export default function MathGame() {
 
     setQuestion({
       question: questionText,
-      answer: answer,
-      options: options,
+      answer: answer.toString(),
+      options,
     });
 
     setIsLoading(false);
   };
 
-  const checkAnswer = (selectedAnswer: number) => {
+  const checkAnswer = (selectedAnswer: string | number) => {
     if (!question) return;
 
-    const correct = selectedAnswer === question.answer;
+    const correct = selectedAnswer.toString() === question.answer;
     setIsCorrect(correct);
     setShowResult(true);
 
@@ -121,7 +141,9 @@ export default function MathGame() {
     } else {
       return t("robotMessages.incorrect");
     }
-  };
+    
+    // Default message when no result is showing
+    return t("robotMessages.thinking");  };
 
   return (
     <PageLayout>
@@ -160,6 +182,15 @@ export default function MathGame() {
                 {t("operations.multiplication")}
               </span>
             </button>
+            <button
+              onClick={() => selectOperation("compare")}
+              className="w-full h-20 rounded-xl bg-[#9333EA] text-white p-6 flex items-center justify-center hover:opacity-90 transition-opacity"
+            >
+              <span className="text-4xl mr-4">&lt;&gt;</span>
+              <span className="text-2xl font-semibold">
+                {t("operations.comparison")}
+              </span>
+            </button>
           </div>
         </div>
       ) : (
@@ -195,44 +226,71 @@ export default function MathGame() {
               {question && (
                 <>
                   <div className="text-2xl font-semibold mb-4 text-[#FF6B9D]">
-                    {question.question}
+                    {question.isComparison ? (
+                      <div className="flex items-center gap-4">
+                        <span>{question.num1}</span>
+                        <span className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center">?</span>
+                        <span>{question.num2}</span>
+                      </div>
+                    ) : (
+                      question.question
+                    )}
                   </div>
-                  <div className="grid grid-cols-2 gap-4">
-                    {question.options.map((option, index) => (
-                      <button
-                        key={index}
-                        onClick={() => checkAnswer(option)}
-                        disabled={showResult}
-                        className="px-6 py-3 text-xl bg-[#FF6B9D] text-white rounded-lg hover:bg-[#FF6B9D]/90 disabled:opacity-50"
-                      >
-                        {option}
-                      </button>
-                    ))}
+                  <div className={`grid ${question.isComparison ? 'grid-cols-2' : 'grid-cols-2'} gap-4`}>
+                    {question.isComparison ? (
+                      <>
+                        <button
+                          onClick={() => checkAnswer("<")}
+                          disabled={showResult}
+                          className="px-6 py-3 text-2xl bg-[#9333EA] text-white rounded-lg hover:bg-[#9333EA]/90 disabled:opacity-50"
+                        >
+                          &lt;
+                        </button>
+                        <button
+                          onClick={() => checkAnswer(">")}
+                          disabled={showResult}
+                          className="px-6 py-3 text-2xl bg-[#9333EA] text-white rounded-lg hover:bg-[#9333EA]/90 disabled:opacity-50"
+                        >
+                          &gt;
+                        </button>
+                      </>
+                    ) : (
+                      question.options?.map((option, index) => (
+                        <button
+                          key={index}
+                          onClick={() => checkAnswer(option)}
+                          disabled={showResult}
+                          className="px-6 py-3 text-xl bg-[#FF6B9D] text-white rounded-lg hover:bg-[#FF6B9D]/90 disabled:opacity-50"
+                        >
+                          {option}
+                        </button>
+                      ))
+                    )}
                   </div>
                 </>
               )}
 
-              {showResult && isCorrect && (
-                <div className="text-xl font-bold text-green-500">
-                  {t("correct")}
-                </div>
-              )}
-
-              {showResult && !isCorrect && (
-                <div className="text-xl font-bold text-red-500">
-                  {t("incorrect")}
-                </div>
-              )}
-
               {showResult && (
-                <button
-                  onClick={
-                    isCorrect ? generateQuestion : () => setShowResult(false)
-                  }
-                  className="mt-4 px-6 py-3 bg-[#FF6B9D] text-white rounded-lg hover:bg-[#FF6B9D]/90"
-                >
-                  {isCorrect ? t("nextQuestion") : t("tryAgain")}
-                </button>
+                <>
+                  {isCorrect ? (
+                    <div className="text-xl font-bold text-green-500">
+                      {question?.isComparison
+                        ? t("comparison.correct", { num1: question.num1, num2: question.num2, symbol: question.answer })
+                        : t("correct")}
+                    </div>
+                  ) : (
+                    <div className="text-xl font-bold text-red-500">
+                      {question?.isComparison ? t("comparison.incorrect") : t("incorrect")}
+                    </div>
+                  )}
+
+                  <button
+                    onClick={isCorrect ? generateQuestion : () => setShowResult(false)}
+                    className="mt-4 px-6 py-3 bg-[#FF6B9D] text-white rounded-lg hover:bg-[#FF6B9D]/90"
+                  >
+                    {isCorrect ? t("nextQuestion") : t("tryAgain")}
+                  </button>
+                </>
               )}
             </div>
           )}

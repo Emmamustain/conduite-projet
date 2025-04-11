@@ -6,14 +6,20 @@
             "addition": "Addition",
             "subtraction": "Soustraction",
             "multiplication": "Multiplication",
-            "division": "Division"
+            "division": "Division",
+            "comparison": "Comparaison de Nombres"
         },
         "score": "Score: {score}",
         "changeOperation": "← Changer d'opération",
         "question": "Combien font {num1} {operator} {num2} ?",
-        "correct": "🎉 Correct!",
-        "incorrect": "❌ Incorrect!",
-        "tryAgain": "❌ Essayez encore!",
+        "comparison": {
+            "question": "Quel symbole va dans la case ?",
+            "correct": " Correct ! {num1} {symbol} {num2}",
+            "incorrect": " Essaie encore ! Réfléchis quel nombre est le plus grand"
+        },
+        "correct": " Correct !",
+        "incorrect": " Incorrect !",
+        "tryAgain": " Essayez encore !",
         "nextQuestion": "Question suivante",
         "robotMessages": {
             "thinking": "Hmm, quelle est la réponse?",
@@ -37,11 +43,11 @@
         "back": "Retour",
         "math": {
             "title": "Jouons aux Maths!",
-            "description": "Rejoins-moi pour des aventures mathématiques amusantes! 🎲"
+            "description": "Rejoins-moi pour des aventures mathématiques amusantes! "
         },
         "chat": {
             "title": "Discute avec Moi!",
-            "description": "Pose-moi n'importe quelle question, je suis là pour t'aider! 💭"
+            "description": "Pose-moi n'importe quelle question, je suis là pour t'aider! "
         }
     },
     "dailyChallenge": {
@@ -49,7 +55,7 @@
         "attempts": "Essais: {count}",
         "enterAnswer": "Entrez votre réponse",
         "submitAnswer": "Soumettre",
-        "correct": "🎉 Correct!",
-        "tryAgain": "❌ Essayez encore!"
+        "correct": " Correct!",
+        "tryAgain": " Essayez encore!"
     }
 }
