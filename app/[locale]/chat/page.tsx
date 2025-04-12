@@ -1,7 +1,6 @@
 "use client";
 import { useChat } from "ai/react";
 import { useTranslations } from "next-intl";
-import { useEffect, useState } from "react";
 import InputForm from "../../components/inputForm";
 import Messages from "../../components/messages";
 import PageLayout from "../../components/PageLayout";
@@ -13,22 +12,6 @@ export default function ChatPage() {
     useChat({
       api: "/api/genai",
     });
-
-  const [responding, setResponding] = useState(false);
-
-  useEffect(() => {
-    if (
-      messages.length > 0 &&
-      messages[messages.length - 1].role === "assistant"
-    ) {
-      setResponding(true);
-      const timer = setTimeout(() => {
-        setResponding(false);
-      }, 2000); // Animation duration
-
-      return () => clearTimeout(timer);
-    }
-  }, [messages]);
 
   return (
     <PageLayout>
