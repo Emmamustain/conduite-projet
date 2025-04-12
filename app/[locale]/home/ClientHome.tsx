@@ -3,9 +3,7 @@ import { Brain, Calculator } from "lucide-react";
 import { useLocale, useTranslations } from 'next-intl';
 import Link from "next/link";
 import PageLayout from '../../components/PageLayout';
-import ChatRobot from "../../components/robots/ChatRobot";
 import EmotionalRobot from "../../components/robots/EmotionalRobot";
-import MathRobot from "../../components/robots/MathRobot";
 
 export default function ClientHome() {
     const t = useTranslations('common');
@@ -28,10 +26,7 @@ export default function ClientHome() {
                     href={`/${locale}/math`}
                     className="group relative flex flex-col items-center p-8 bg-white rounded-3xl shadow-lg hover:shadow-xl transition-all duration-300 border-4 border-[#FFB6C1] hover:border-[#FF6B9D] hover:-translate-y-2"
                 >
-                    <div className="absolute -top-20 transition-transform group-hover:scale-110">
-                        <MathRobot />
-                    </div>
-                    <Calculator className="w-16 h-16 text-[#FF6B9D] mb-4 mt-12" />
+                    <Calculator className="w-16 h-16 text-[#FF6B9D] mb-4" />
                     <h2 className="text-2xl font-bold text-[#FF6B9D] mb-2">
                         {t('math.title')}
                     </h2>
@@ -44,10 +39,7 @@ export default function ClientHome() {
                     href={`/${locale}/chat`}
                     className="group relative flex flex-col items-center p-8 bg-white rounded-3xl shadow-lg hover:shadow-xl transition-all duration-300 border-4 border-[#87CEEB] hover:border-[#4DA6FF] hover:-translate-y-2"
                 >
-                    <div className="absolute -top-12 transition-transform group-hover:scale-110">
-                        <ChatRobot />
-                    </div>
-                    <Brain className="w-16 h-16 text-[#4DA6FF] mb-4 mt-8" />
+                    <Brain className="w-16 h-16 text-[#4DA6FF] mb-4" />
                     <h2 className="text-2xl font-bold text-[#4DA6FF] mb-2">
                         {t('chat.title')}
                     </h2>
@@ -58,4 +50,4 @@ export default function ClientHome() {
             </div>
         </PageLayout>
     );
-} 
+}
