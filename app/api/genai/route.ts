@@ -22,10 +22,10 @@ function isMathRelated(question: string): boolean {
 export async function POST(req: Request) {
   const reqBody = await req.json();
   const messages: Message[] = reqBody.messages;
-  
+
   // Get the latest user message
   const latestUserMessage = messages.filter(msg => msg.role === 'user').pop();
-  
+
   if (!latestUserMessage) {
     return new Response(JSON.stringify({ error: 'No user message found' }), {
       status: 400,
@@ -47,7 +47,7 @@ export async function POST(req: Request) {
   const mathSystemPrompt: Message = {
     id: crypto.randomUUID(),
     role: 'system',
-    content: 'You are a math tutor assistant. Only provide responses related to mathematics and mathematical concepts. Keep explanations clear and suitable for children.'
+    content: 'You are a math tutor assistant. Only provide responses related to mathematics and mathematical concepts. Keep explanations clear and suitable for children. Respond with the same language as the user. French is preferred.',
   };
 
   // Build the multi-turn chat prompt
