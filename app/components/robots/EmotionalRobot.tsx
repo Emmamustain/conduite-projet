@@ -3,9 +3,10 @@ import { useEffect, useState } from "react";
 import happyAnimation from "./animations/happy.json";
 import hmmAnimation from "./animations/hmm.json";
 import sadAnimation from "./animations/sad.json";
+import talkingAnimation from "./animations/talking.json";
 import wowAnimation from "./animations/wow.json";
 
-type Emotion = "neutral" | "happy" | "sad" | "surprise";
+type Emotion = "neutral" | "happy" | "sad" | "surprise" | "talking";
 
 interface EmotionalRobotProps {
   emotion: Emotion;
@@ -17,6 +18,7 @@ const emotionAnimations = {
   sad: sadAnimation,
   neutral: hmmAnimation,
   surprise: wowAnimation,
+  talking: talkingAnimation,
 };
 
 export default function EmotionalRobot({
