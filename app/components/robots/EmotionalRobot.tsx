@@ -41,7 +41,7 @@ export default function EmotionalRobot({
     <div className={`${animationClass} transition-all duration-300`}>
       <Lottie
         animationData={emotionAnimations[emotion]}
-        loop={true}
+        loop={emotion === 'happy'}
         style={{ width: size, height: size }}
       />
     </div>
