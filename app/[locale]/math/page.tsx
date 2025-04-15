@@ -39,7 +39,14 @@ export default function MathGame() {
     const num2 = Math.floor(Math.random() * 100);
 
     if (selectedOperation === "compare") {
-      const answer = num1 > num2 ? ">" : "<";
+      let answer;
+      if (num1 > num2) {
+        answer = ">";
+      } else if (num1 < num2) {
+        answer = "<";
+      } else {
+        answer = "=";
+      }
       setQuestion({
         question: t("comparison.question"),
         answer,
@@ -236,7 +243,7 @@ export default function MathGame() {
                       question.question
                     )}
                   </div>
-                  <div className={`grid ${question.isComparison ? 'grid-cols-2' : 'grid-cols-2'} gap-4`}>
+                  <div className={`grid ${question.isComparison ? 'grid-cols-3' : 'grid-cols-2'} gap-4`}>
                     {question.isComparison ? (
                       <>
                         <button
@@ -245,6 +252,13 @@ export default function MathGame() {
                           className="px-6 py-3 text-2xl bg-[#9333EA] text-white rounded-lg hover:bg-[#9333EA]/90 disabled:opacity-50"
                         >
                           &lt;
+                        </button>
+                        <button
+                          onClick={() => checkAnswer("=")}
+                          disabled={showResult}
+                          className="px-6 py-3 text-2xl bg-[#9333EA] text-white rounded-lg hover:bg-[#9333EA]/90 disabled:opacity-50"
+                        >
+                          =
                         </button>
                         <button
                           onClick={() => checkAnswer(">")}
