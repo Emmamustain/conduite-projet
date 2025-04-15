@@ -14,10 +14,10 @@ export default function ChatPage() {
     });
 
   return (
-    <PageLayout>
+    <PageLayout showBackButton={false}>
       <h1 className="text-4xl font-bold mb-8 text-[#FF6B9D]">{t("title")}</h1>
-      <div className="w-[150px] h-[150px] mx-auto mb-6">
-        <EmotionalRobot emotion="happy" size={150} />
+      <div className="w-[250px] h-[250px] mx-auto mb-8">
+        <EmotionalRobot emotion="happy" size={250} />
       </div>
       <InputForm
         input={input}

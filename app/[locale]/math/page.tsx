@@ -159,8 +159,14 @@ export default function MathGame() {
     return t("robotMessages.thinking");  };
 
   return (
-    <PageLayout>
-      <h1 className="text-4xl font-bold mb-8 text-[#4DA6FF]">{t("title")}</h1>
+    <PageLayout showBackButton={false}>
+      <h1 className="text-4xl font-extrabold mb-2 text-[#4DA6FF]">{t("title")}</h1>
+      
+      {selectedOperation && (
+        <div className="text-2xl mb-6 text-[#FF6B9D] font-bold">
+          {t("score", { score })}
+        </div>
+      )}
 
       {!selectedOperation ? (
         <div className="flex flex-col items-center gap-6 w-full max-w-6xl">
@@ -179,7 +185,7 @@ export default function MathGame() {
             </button>
             <button
               onClick={() => selectOperation("subtract")}
-              className="w-44 h-44 rounded-full bg-[#EAB308] text-white p-6 flex flex-col items-center justify-center hover:scale-105 transition-transform duration-300 shadow-lg"
+              className="w-44 h-44 rounded-full bg-[#FFD700] text-white p-6 flex flex-col items-center justify-center hover:scale-105 transition-transform duration-300 shadow-lg"
             >
               <span className="text-6xl mb-2">−</span>
               <span className="text-xl font-semibold">
@@ -207,17 +213,14 @@ export default function MathGame() {
           </div>
         </div>
       ) : (
-        <>
-          <div className="text-xl mb-4 text-[#FF6B9D]">
-            {t("score", { score })}
-          </div>
+        <div className="relative w-full">
           <button
             onClick={() => setSelectedOperation(null)}
-            className="mb-6 px-6 py-3 text-lg bg-[#FF8FB1] text-white rounded-lg hover:bg-[#FF8FB1]/90 transition-colors font-semibold"
+            className="absolute top-0 left-0 px-6 py-3 text-lg bg-[#FFD700] text-white rounded-full hover:bg-[#FFD700]/90 transition-colors font-semibold hover:scale-105"
           >
             {t("changeOperation")}
           </button>
-
+          
           {isLoading ? (
             <Loader2 className="h-8 w-8 animate-spin text-[#FF6B9D]" />
           ) : (
@@ -350,7 +353,7 @@ export default function MathGame() {
               )}
             </div>
           )}
-        </>
+        </div>
       )}
     </PageLayout>
   );
