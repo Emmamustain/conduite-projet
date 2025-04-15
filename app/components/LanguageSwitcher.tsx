@@ -16,7 +16,7 @@ export default function LanguageSwitcher() {
     return (
         <button
             onClick={switchLocale}
-            className="absolute right-8 top-8 px-4 py-2 rounded-lg bg-white shadow-md hover:shadow-lg transition-all flex items-center gap-2 text-gray-800 hover:text-[#FF6B9D]"
+            className="absolute right-2 -top-2 px-4 py-2 rounded-lg bg-white shadow-md hover:shadow-lg transition-all flex items-center gap-2 text-gray-800 hover:text-[#FF6B9D]"
         >
             {locale === 'en' ? (
                 <>

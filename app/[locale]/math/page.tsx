@@ -160,7 +160,7 @@ export default function MathGame() {
 
   return (
     <PageLayout showBackButton={false}>
-      <h1 className="text-4xl font-extrabold mb-2 text-[#4DA6FF]">{t("title")}</h1>
+      <h1 className="text-4xl font-[900] mb-2 text-[#085cb1]">{t("title")}</h1>
       
       {selectedOperation && (
         <div className="text-2xl mb-6 text-[#FF6B9D] font-bold">
@@ -216,7 +216,7 @@ export default function MathGame() {
         <div className="relative w-full">
           <button
             onClick={() => setSelectedOperation(null)}
-            className="absolute top-0 left-0 px-6 py-3 text-lg bg-[#FFD700] text-white rounded-full hover:bg-[#FFD700]/90 transition-colors font-semibold hover:scale-105"
+            className="absolute -top-28 left-0 px-6 py-3 text-lg bg-[#FFD700] text-white rounded-full hover:bg-[#FFD700]/90 transition-colors font-semibold hover:scale-105"
           >
             {t("changeOperation")}
           </button>

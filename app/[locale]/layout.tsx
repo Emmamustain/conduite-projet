@@ -9,6 +9,7 @@ const comicSans = Comic_Neue({
     subsets: ["latin"],
 });
 
+
 export function generateStaticParams() {
     return [{ locale: 'en' }, { locale: 'fr' }];
 }

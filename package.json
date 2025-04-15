@@ -13,6 +13,7 @@
     "@lottiefiles/react-lottie-player": "^3.6.0",
     "ai": "^3.0.2",
     "dompurify": "^3.2.4",
+    "framer-motion": "^12.7.3",
     "lottie-react": "^2.4.1",
     "lucide-react": "^0.477.0",
     "markdown-it": "^14.1.0",

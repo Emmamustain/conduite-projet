@@ -27,7 +27,7 @@ export default function ClientHome() {
                     className="group relative flex flex-col items-center p-8 bg-white rounded-3xl shadow-lg hover:shadow-xl transition-all duration-300 border-4 border-[#FFB6C1] hover:border-[#FF6B9D] hover:-translate-y-2"
                 >
                     <Calculator className="w-16 h-16 text-[#FF6B9D] mb-4" />
-                    <h2 className="text-2xl font-bold text-[#FF6B9D] mb-2">
+                    <h2 className="text-2xl font-bold text-[#FE6B9D] mb-2">
                         {t('math.title')}
                     </h2>
                     <p className="text-gray-600 text-center">
