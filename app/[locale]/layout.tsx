@@ -1,15 +1,11 @@
 import { NextIntlClientProvider } from 'next-intl';
-import { Geist, Geist_Mono } from "next/font/google";
+import { Comic_Neue } from "next/font/google";
 import { notFound } from 'next/navigation';
 import { ReactNode } from 'react';
 
-const geistSans = Geist({
-    variable: "--font-geist-sans",
-    subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-    variable: "--font-geist-mono",
+const comicSans = Comic_Neue({
+    weight: ['400', '700'],
+    variable: "--font-comic-sans",
     subsets: ["latin"],
 });
 
@@ -32,8 +28,8 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
     }
 
     return (
-        <html lang={locale} className={`${geistSans.variable} ${geistMono.variable}`}>
-            <body>
+        <html lang={locale} className={`${comicSans.variable}`}>
+            <body className="font-comic-sans">
                 <NextIntlClientProvider locale={locale} messages={messages}>
                     {children}
                 </NextIntlClientProvider>

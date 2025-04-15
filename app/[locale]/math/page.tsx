@@ -26,6 +26,7 @@ export default function MathGame() {
   const [selectedOperation, setSelectedOperation] = useState<Operation | null>(
     null
   );
+  const [selectedSign, setSelectedSign] = useState<string | null>(null);
   const [robotEmotion, setRobotEmotion] = useState<
     "neutral" | "happy" | "sad" | "surprise"
   >("happy");
@@ -34,6 +35,7 @@ export default function MathGame() {
     setIsLoading(true);
     setShowResult(false);
     setRobotEmotion("happy");
+    setSelectedSign(null);
 
     const num1 = Math.floor(Math.random() * 100);
     const num2 = Math.floor(Math.random() * 100);
@@ -116,6 +118,10 @@ export default function MathGame() {
   const checkAnswer = (selectedAnswer: string | number) => {
     if (!question) return;
 
+    if (question.isComparison) {
+      setSelectedSign(selectedAnswer.toString());
+    }
+
     const correct = selectedAnswer.toString() === question.answer;
     setIsCorrect(correct);
     setShowResult(true);
@@ -154,47 +160,47 @@ export default function MathGame() {
 
   return (
     <PageLayout>
-      <h1 className="text-4xl font-bold mb-8 text-[#1a1a1a]">{t("title")}</h1>
+      <h1 className="text-4xl font-bold mb-8 text-[#4DA6FF]">{t("title")}</h1>
 
       {!selectedOperation ? (
         <div className="flex flex-col items-center gap-6 w-full max-w-6xl">
-          <div className="text-2xl font-semibold mb-6 text-[#1a1a1a]">
+          <div className="text-2xl font-semibold mb-6 text-[#4B5563]">
             {t("chooseOperation")}
           </div>
-          <div className="w-full flex flex-col gap-4 mb-8">
+          <div className="w-full max-w-md grid grid-cols-2 gap-8 mb-8">
             <button
               onClick={() => selectOperation("add")}
-              className="w-full h-20 rounded-xl bg-[#4ADE80] text-white p-6 flex items-center justify-center hover:opacity-90 transition-opacity"
+              className="w-44 h-44 rounded-full bg-[#4ADE80] text-white p-6 flex flex-col items-center justify-center hover:scale-105 transition-transform duration-300 shadow-lg"
             >
-              <span className="text-4xl mr-4">+</span>
-              <span className="text-2xl font-semibold">
+              <span className="text-6xl mb-2">+</span>
+              <span className="text-xl font-semibold">
                 {t("operations.addition")}
               </span>
             </button>
             <button
               onClick={() => selectOperation("subtract")}
-              className="w-full h-20 rounded-xl bg-[#EAB308] text-white p-6 flex items-center justify-center hover:opacity-90 transition-opacity"
+              className="w-44 h-44 rounded-full bg-[#EAB308] text-white p-6 flex flex-col items-center justify-center hover:scale-105 transition-transform duration-300 shadow-lg"
             >
-              <span className="text-4xl mr-4">−</span>
-              <span className="text-2xl font-semibold">
+              <span className="text-6xl mb-2">−</span>
+              <span className="text-xl font-semibold">
                 {t("operations.subtraction")}
               </span>
             </button>
             <button
               onClick={() => selectOperation("multiply")}
-              className="w-full h-20 rounded-xl bg-[#EF4444] text-white p-6 flex items-center justify-center hover:opacity-90 transition-opacity"
+              className="w-44 h-44 rounded-full bg-[#EF4444] text-white p-6 flex flex-col items-center justify-center hover:scale-105 transition-transform duration-300 shadow-lg"
             >
-              <span className="text-4xl mr-4">×</span>
-              <span className="text-2xl font-semibold">
+              <span className="text-6xl mb-2">×</span>
+              <span className="text-xl font-semibold">
                 {t("operations.multiplication")}
               </span>
             </button>
             <button
               onClick={() => selectOperation("compare")}
-              className="w-full h-20 rounded-xl bg-[#9333EA] text-white p-6 flex items-center justify-center hover:opacity-90 transition-opacity"
+              className="w-44 h-44 rounded-full bg-[#9333EA] text-white p-6 flex flex-col items-center justify-center hover:scale-105 transition-transform duration-300 shadow-lg"
             >
-              <span className="text-4xl mr-4">&lt;&gt;</span>
-              <span className="text-2xl font-semibold">
+              <span className="text-6xl mb-2">&lt;&gt;</span>
+              <span className="text-xl font-semibold">
                 {t("operations.comparison")}
               </span>
             </button>
@@ -219,7 +225,7 @@ export default function MathGame() {
               {/* Robot with emotion and speech bubble */}
               <div className="relative mb-8">
                 <div className="mb-4 transition-all duration-300">
-                  <EmotionalRobot emotion={robotEmotion} size={180} />
+                  <EmotionalRobot emotion={robotEmotion} size={200} />
                 </div>
 
                 {/* Speech bubble */}
@@ -232,12 +238,23 @@ export default function MathGame() {
 
               {question && (
                 <>
-                  <div className="text-2xl font-semibold mb-4 text-[#FF6B9D]">
+                  <div className="text-2xl font-semibold mb-4 text-[#4B5563]">
                     {question.isComparison ? (
-                      <div className="flex items-center gap-4">
-                        <span>{question.num1}</span>
-                        <span className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center">?</span>
-                        <span>{question.num2}</span>
+                      <div className="flex items-center gap-10 justify-center">
+                        <span className="text-4xl font-bold">{question.num1}</span>
+                        {selectedSign ? (
+                          <div className={`w-14 h-14 text-2xl rounded-full shadow-md flex items-center justify-center font-bold
+                            ${selectedSign === "<" ? "bg-[#FF6B9D] text-white" : 
+                              selectedSign === "=" ? "bg-[#FFD700] text-white" : 
+                              "bg-[#3B82F6] text-white"}`}>
+                            {selectedSign === "<" ? "<" : 
+                             selectedSign === "=" ? "=" : 
+                             ">"}
+                          </div>
+                        ) : (
+                          <span className="w-14 h-14 bg-gray-100 rounded-lg flex items-center justify-center text-2xl">?</span>
+                        )}
+                        <span className="text-4xl font-bold">{question.num2}</span>
                       </div>
                     ) : (
                       question.question
@@ -249,36 +266,61 @@ export default function MathGame() {
                         <button
                           onClick={() => checkAnswer("<")}
                           disabled={showResult}
-                          className="px-6 py-3 text-2xl bg-[#9333EA] text-white rounded-lg hover:bg-[#9333EA]/90 disabled:opacity-50"
+                          className="w-20 h-20 text-2xl bg-[#FF6B9D] text-white rounded-full shadow-md hover:shadow-xl hover:scale-110 transition-all duration-300 disabled:opacity-50 flex items-center justify-center font-bold"
                         >
                           &lt;
                         </button>
                         <button
                           onClick={() => checkAnswer("=")}
                           disabled={showResult}
-                          className="px-6 py-3 text-2xl bg-[#9333EA] text-white rounded-lg hover:bg-[#9333EA]/90 disabled:opacity-50"
+                          className="w-20 h-20 text-2xl bg-[#FFD700] text-white rounded-full shadow-md hover:shadow-xl hover:scale-110 transition-all duration-300 disabled:opacity-50 flex items-center justify-center font-bold"
                         >
                           =
                         </button>
                         <button
                           onClick={() => checkAnswer(">")}
                           disabled={showResult}
-                          className="px-6 py-3 text-2xl bg-[#9333EA] text-white rounded-lg hover:bg-[#9333EA]/90 disabled:opacity-50"
+                          className="w-20 h-20 text-2xl bg-[#3B82F6] text-white rounded-full shadow-md hover:shadow-xl hover:scale-110 transition-all duration-300 disabled:opacity-50 flex items-center justify-center font-bold"
                         >
                           &gt;
                         </button>
                       </>
                     ) : (
-                      question.options?.map((option, index) => (
-                        <button
-                          key={index}
-                          onClick={() => checkAnswer(option)}
-                          disabled={showResult}
-                          className="px-6 py-3 text-xl bg-[#FF6B9D] text-white rounded-lg hover:bg-[#FF6B9D]/90 disabled:opacity-50"
-                        >
-                          {option}
-                        </button>
-                      ))
+                      question.options?.map((option, index) => {
+                        // Get color class based on index
+                        let colorClass = "";
+                        switch (index % 6) {
+                          case 0:
+                            colorClass = "bg-[#FF6B9D]"; // Pink
+                            break;
+                          case 1:
+                            colorClass = "bg-[#FFD700]"; // Yellow
+                            break;
+                          case 2:
+                            colorClass = "bg-[#3B82F6]"; // Blue
+                            break;
+                          case 3:
+                            colorClass = "bg-[#4ADE80]"; // Green
+                            break;
+                          case 4:
+                            colorClass = "bg-[#F97316]"; // Orange
+                            break;
+                          case 5:
+                            colorClass = "bg-[#8B5CF6]"; // Purple
+                            break;
+                        }
+                        
+                        return (
+                          <button
+                            key={index}
+                            onClick={() => checkAnswer(option)}
+                            disabled={showResult}
+                            className={`w-20 h-20 text-2xl ${colorClass} text-white rounded-full shadow-md hover:shadow-xl hover:scale-110 transition-all duration-300 disabled:opacity-50 flex items-center justify-center font-bold`}
+                          >
+                            {option}
+                          </button>
+                        );
+                      })
                     )}
                   </div>
                 </>
